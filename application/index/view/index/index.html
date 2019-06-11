@@ -1,0 +1,136 @@
+{extend name="layout/main"}
+{block name="nav"}
+<div class="nav-inner">
+    <ul class="nav-list">
+        <li class="nav-item">
+            <span class="item">全部分类</span>
+            <div class="left-menu">
+                {foreach $cats as $id => $cat}
+                <div class="level-item">
+                    <div class="first-level">
+                        <dl>
+                            <dt class="title"><a href="{:url('lists/index', ['id' => $id])}" target="_top">{$cat.name}</a></dt>
+                            {volist name="$cat.sons" id="vo" length="2"}
+                            <dd>
+                                <a href="{:url('lists/index', ['id' => $vo.id])}" target="_top" class="">{$vo.name}</a>
+                            </dd>
+                            {/volist}
+                        </dl>
+                    </div>
+                    <div class="second-level">
+                        <div class="section">
+                            <div class="section-item clearfix no-top-border">
+                                <h3>其他分类</h3>
+                                <ul>
+                                    {foreach $cat.sons as $item}
+                                        <li><a href=":url('lists/index')" target="_blank">{$item.name}</a></li>
+                                    {/foreach}
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+        </li>
+        <li class="nav-item"><a class="item first active">首页</a></li>
+        <li class="nav-item"><a class="item">团购</a></li>
+        <li class="nav-item"><a class="item">商户</a></li>
+    </ul>
+</div>
+{/block}
+{block name="container"}
+<div class="top-container">
+    <div class="mid-area">
+        <div class="slide-holder" id="slide-holder">
+            <a href="#" class="slide-prev"><i class="slide-arrow-left"></i></a>
+            <a href="#" class="slide-next"><i class="slide-arrow-right"></i></a>
+            <ul class="slideshow">
+                {volist name="$adPics" id="vo"}
+                <li><a href="{$vo.url}" class="item-large" target="_blank"><img class="ad-pic" src="{$vo.image}" /></a></li>
+                {/volist}
+            </ul>
+        </div>
+        <div class="list-container">
+
+        </div>
+    </div>
+</div>
+<div class="right-sidebar">
+    <div class="right-ad">
+        <ul class="slidepic">
+            {volist name="$commendPics" id="vo"}
+            <li><a href="{$vo.url}" target="_blank"><img src="{$vo.image}" /></a></li>
+            {/volist}
+        </ul>
+    </div>
+
+</div>
+<div class="content-container">
+    <div class="no-recom-container">
+        <div class="floor-content-start">
+            {foreach $results as $result}
+            <div class="floor-content">
+                <div class="floor-header">
+                    {foreach $result['cateName'] as $vo}
+                    <h3>{$vo}</h3>
+                    {/foreach}
+                    <ul class="reco-words">
+                        <li><a href="//t10.nuomi.com/pc/t10/index" target="_blank">精选品牌</a></li>
+                        {foreach $result['subCates'] as $vo}
+                        <li><a href="//bj.nuomi.com/380" target="_blank">{$vo.name}</a></li>
+                       {/foreach}
+                        <li><a class="no-right-border no-right-padding" target="_blank" href="{:url('lists/index', ['id' => 1])}">全部<span class="all-cate-arrow"></span></a></li>
+                    </ul>
+                </div>
+                <ul class="itemlist eight-row-height">
+                    {if condition="count($result['goodsInfo'])>0"}
+                    {foreach $result['goodsInfo'] as $vo}
+                    <li class="j-card">
+                        <a>
+                            <div class="imgbox">
+                                <ul class="marketing-label-container">
+                                    <li class="marketing-label marketing-free-appoint"></li>
+                                </ul>
+                                <div class="range-area">
+                                    <div class="range-bg"></div>
+                                    <div class="range-inner">
+                                        <span class="white-locate"></span>
+                                        安贞 六里桥 丽泽桥 安定门 劲松 昌平镇 航天桥 通州区 通州北苑
+                                    </div>
+                                </div>
+                                <div class="borderbox">
+                                    <img src="{$vo.image}" />
+                                </div>
+                            </div>
+                        </a>
+                        <div class="contentbox">
+                            <a href="{:url('detail/index', ['id' => $vo.id])}" target="_blank">
+                                <div class="header">
+                                    <h4 class="title ">【{$vo.location_ids|countLocation}店通用】</h4>
+                                </div>
+                                <p>{$vo.name}</p>
+                            </a>
+                            <div class="add-info"></div>
+                            <div class="pinfo">
+                                <span class="price"><span class="moneyico">¥</span>{$vo.current_price}</span>
+                                <span class="ori-price">价值<span class="price-line">¥<span>{$vo.origin_price}</span></span></span>
+                            </div>
+                            <div class="footer">
+                                <span class="comment">4.6分</span><span class="sold">已售{$vo.buy_count}</span>
+                                <div class="bottom-border"></div>
+                            </div>
+                        </div>
+                    </li>
+                    {/foreach}
+                    {else /}
+                        <span style="color:red;font-size:24px;">该城市下没有此分类数据</span>
+                    {/if}
+                </ul>
+            </div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{/block}

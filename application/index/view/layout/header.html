@@ -1,0 +1,27 @@
+<div class="header-inner">
+    <ul class="father">
+        <li><a>{$city.name}</a></li>
+        <li>|</li>
+        <li class="city">
+            <a>切换城市<span class="arrow-down-logo"></span></a>
+            <div class="city-drop-down">
+                <h3>热门城市</h3>
+                <ul class="son">
+                    {foreach $citys as $city}
+                    <li><a href="{:url('index/index', ['city' => $city.uname])}">{$city.name}</a></li>
+                    {/foreach}
+                </ul>
+
+            </div>
+        </li>
+        {if condition="$user" }
+            <li>欢迎您：{$user.username}</li>
+            <li><a href="{:url('index/user/logout')}">退出</a></li>
+        {else /}
+            <li><a href="{:url('user/register')}">注册</a></li>
+            <li>|</li>
+            <li><a href="{:url('user/login')}">登录</a></li>
+        {/if}
+        <li><a href="{:url('bis/login/index')}">商户中心</a></li>
+    </ul>
+</div>
